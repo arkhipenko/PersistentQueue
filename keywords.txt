@@ -1,0 +1,45 @@
+#######################################
+# Syntax Coloring Map For TaskManager
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PersistentQueue	KEYWORD1
+pqDequeueOrder_t	KEYWORD1
+pqError_t	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+end	KEYWORD2
+enqueue	KEYWORD2
+isQueueEmpty	KEYWORD2
+dequeue	KEYWORD2
+purge	KEYWORD2
+getLastError	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+
+PQ_DEQUEUE_DEFAULT	LITERAL1
+PQ_DEQUEUE_OLDEST	LITERAL1
+PQ_DEQUEUE_LATEST	LITERAL1
+PQ_ERROR_OK	LITERAL1
+PQ_ERROR_NOT_INITIALIZED	LITERAL1
+PQ_ERROR_FILE_OP	LITERAL1
+PQ_ERROR_OUT_OF_SUBNUMBERS	LITERAL1
+PQ_ERROR_INVALID_PREFIX	LITERAL1
+PQ_ERROR_QUEUE_EMPTY	LITERAL1
+PQ_ERROR_INVALID_MAGIC	LITERAL1
+PQ_ERROR_OUT_OF_MEMORY	LITERAL1
+PQ_ERROR_BAD_CRC	LITERAL1
+PQ_ERROR_NULL_POINTER	LITERAL1
+PQ_ERROR_SMALL_BUFFER	LITERAL1
+PQ_ERROR_OTHER	LITERAL1
+
+#######################################
+

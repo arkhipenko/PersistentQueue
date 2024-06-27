@@ -1,0 +1,22 @@
+{
+  "name": "PersistentQueue",
+  "keywords": "queue, stack, messaging, mqtt, persistance, flash, SPIFFS, LittleFS",
+  "description": "Implementation of a queue that persists messages to flash",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/arkhipenko/PersistentQueue"
+  },
+  "authors":
+  [
+    {
+      "name": "Anatoli Arkhipenko",
+      "email": "arkhipenko@hotmail.com",
+      "url": "https://github.com/arkhipenko",
+      "maintainer": true
+    }
+  ],
+  "version": "1.0.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
