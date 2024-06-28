@@ -45,7 +45,7 @@ void listSPIFFSContents(String folderPath) {
   while (file) {
     if (!file.isDirectory()) {
       Serial.print("FILE: ");
-      Serial.print(file.path());
+      Serial.print(file.name());
       Serial.print(" SIZE: ");
       Serial.println(file.size());
 

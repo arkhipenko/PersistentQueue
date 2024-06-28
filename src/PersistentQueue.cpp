@@ -134,6 +134,7 @@ bool PersistentQueue::enqueue(uint32_t name, const uint8_t* data, size_t len) {
         //       0123456789012345678
         //      '/q/1234567890-00
         snprintf(fn, PQ_MAX_FILENAME_SIZE, "%s/%010d-%02d", m_prefix.c_str(), name, i);
+// Serial.printf("PersistentQueue::enqueue - storing %s\n", fn);
         if ( !PQ_FS.exists(fn) ) {
             File F = PQ_FS.open(fn, "w+");
             if ( !F ) {
@@ -219,7 +220,12 @@ bool PersistentQueue::dequeue(uint8_t* data, size_t len, size_t* actual_len, boo
     }
 
     String fn = findNextMessage(fast_check);
-    String fp = m_prefix+'/'+fn;
+    String fp = fn;
+
+    // IDF 4.x and above returns just name, not a path like 3.x:    
+    if ( !fn.startsWith("/")) fp = m_prefix+'/'+fn;
+// Serial.printf("PersistentQueue::dequeue - retrieving %s (%s)\n", fp.c_str(), fn.c_str());
+
     if ( fn.length() == 0 ) {
         m_lastError = PQ_ERROR_QUEUE_EMPTY; // ?
         return false;
@@ -307,7 +313,12 @@ bool PersistentQueue::dequeue(uint8_t** data, size_t* len, bool fast_check) {
     }
 
     String fn = findNextMessage(fast_check);
-    String fp = m_prefix+'/'+fn;
+    String fp = fn;
+
+    // IDF 4.x and above returns just name, not a path like 3.x:
+    if ( !fn.startsWith("/")) fp = m_prefix+'/'+fn;
+// Serial.printf("PersistentQueue::dequeue - retrieving %s (%s)\n", fp.c_str(), fn.c_str());
+
     if ( fn.length() == 0 ) {
         m_lastError = PQ_ERROR_QUEUE_EMPTY; // ?
         return false;
@@ -451,6 +462,9 @@ String PersistentQueue::findNextMessage(bool fast_check, pqDequeueOrder_t order)
                 soughtFileName = fileName;
             }
             break;
+
+        default:
+            break;
     }
 
     file = root.openNextFile();
@@ -499,7 +513,11 @@ bool PersistentQueue::purge(bool fast_check) {
         }
     }
 
-    String fileName = file.path();
+
+    String fileName = file.name();
+    // IDF 4.x and above returns just name, not a path like 3.x:
+    if ( !fileName.startsWith("/") ) fileName = m_prefix + '/' + file.name();
+    
     file.close();
     if ( !PQ_FS.remove(fileName) ) {
         result = false;
