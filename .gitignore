@@ -14,3 +14,8 @@ claude-start
 
 # Local scratch folders
 _*/
+
+# Host test binaries
+tests/host/test_spiffs
+tests/host/test_littlefs
+tests/host/test_idf3

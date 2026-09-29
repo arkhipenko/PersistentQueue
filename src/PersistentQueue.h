@@ -2,8 +2,8 @@
 #include <Arduino.h>
 #include <FS.h>
 
-#define PQ_VERSION_STRING   "1.2.0"
-#define PQ_VERSION          10200   // major * 10000 + minor * 100 + patch
+#define PQ_VERSION_STRING   "1.2.1"
+#define PQ_VERSION          10201   // major * 10000 + minor * 100 + patch
 
 // namespace PQ {
 

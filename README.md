@@ -1,13 +1,25 @@
 # Persistent Queue
 ### Implementation of a queue that persists messages to flash.
-#### Version 1.2.0: 2026-09-29
+#### Version 1.2.1: 2026-09-29
 
 A queue of binary messages for the ESP32 (arduino-esp32). Each message is a file on SPIFFS or LittleFS, so the queue survives a reset or a power loss. Messages are retrieved oldest first or newest first. The typical use is store-and-forward: a device keeps readings or MQTT messages while it is offline and sends them when the link returns.
 
 ## Installation
 
 - Arduino IDE: Library Manager, "PersistentQueue".
-- PlatformIO: `lib_deps = https://github.com/arkhipenko/PersistentQueue.git#v1.2.0`, and `lib_ldf_mode = chain+` (the default chain mode compiles both file system libraries).
+- PlatformIO: `lib_deps = https://github.com/arkhipenko/PersistentQueue.git#v1.2.1`, and `lib_ldf_mode = chain+` (the default chain mode compiles both file system libraries).
+
+## Compatibility
+
+The CI builds every example on these arduino-esp32 cores:
+
+| Core | ESP-IDF | Chips | File systems |
+|---|---|---|---|
+| 3.x (latest) | 5.x | ESP32, ESP32-S3, ESP32-C3 | SPIFFS, LittleFS |
+| 2.0.17 | 4.4 | ESP32 | SPIFFS, LittleFS |
+| 1.0.6 | 3.3 | ESP32 | SPIFFS (the 1.0.x cores have no LittleFS) |
+
+The host tests also model the file name behavior of the 1.0.x cores. Nothing is run on hardware in CI.
 
 ## File system
 
@@ -43,7 +55,7 @@ void loop() {
 }
 ```
 
-See `examples/StoreAndForward` for a complete sketch.
+See `examples/StoreAndForward` for a complete sketch, and `examples/SharedFolder` for two queues in one folder, the message limit in reject mode, `peek()` into a buffer, `isQueueEmpty()` and `end()`.
 
 ## API
 
@@ -129,6 +141,7 @@ magic        message   CRC
 
 ## Version history
 
+- 1.2.1 (2026-09-29): CI builds on cores 3.x (ESP32, ESP32-S3, ESP32-C3), 2.0.17 and 1.0.6; SharedFolder example; examples check `begin()`; test binaries ignored; README version checked by the tests. No library code change.
 - 1.2.0 (2026-09-29): ordering fixed for arduino-esp32 2.x and 3.x, power-loss safe `enqueue()`, bad messages no longer block the queue, `peek()`, `drop()`, `setMaxMessages()`, version macros, examples, host tests and CI.
 - 1.1.0: `count()`: number of queued messages. Not released separately.
 - 1.0.1: support for IDF 3.x.

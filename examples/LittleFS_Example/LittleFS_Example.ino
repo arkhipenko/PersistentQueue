@@ -27,8 +27,11 @@ void setup (void)
   Serial.println ("\n\nPersistent Queue Testing\n\n");
   LittleFS.begin(true);
 
-  fq1.begin("/fq1");
-  fq2.begin("/fq2/");
+  // begin() fails for a bad prefix or when the file system is not mounted
+  if ( !fq1.begin("/fq1") || !fq2.begin("/fq2/") ) {
+    Serial.printf("Queue begin failed: %d / %d\n", fq1.getLastError(), fq2.getLastError());
+    while (1) delay(1000);
+  }
 
 }  // end of setup
 

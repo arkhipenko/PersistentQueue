@@ -495,7 +495,7 @@ static void test_crc_off_and_format() {
 }
 
 static void test_manifests() {
-  printf("version: header, library.json, library.properties\n");
+  printf("version: header, library.json, library.properties, README\n");
   auto slurp = [](const char* path) {
     std::string s;
     FILE* f = fopen(path, "rb");
@@ -509,6 +509,9 @@ static void test_manifests() {
   std::string props = slurp(PQ_REPO_DIR "/library.properties");
   CHECK(json.find("\"version\": \"" PQ_VERSION_STRING "\"") != std::string::npos);
   CHECK(props.find("version=" PQ_VERSION_STRING) != std::string::npos);
+  std::string readme = slurp(PQ_REPO_DIR "/README.md");
+  CHECK(readme.find("#### Version " PQ_VERSION_STRING ":") != std::string::npos);
+  CHECK(readme.find("- " PQ_VERSION_STRING " (") != std::string::npos);    // version history entry
   int major = 0, minor = 0, patch = 0;
   CHECK(sscanf(PQ_VERSION_STRING, "%d.%d.%d", &major, &minor, &patch) == 3);
   CHECK(PQ_VERSION == major * 10000 + minor * 100 + patch);
