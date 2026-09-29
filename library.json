@@ -1,6 +1,6 @@
 {
   "name": "PersistentQueue",
-  "keywords": "queue, stack, messaging, mqtt, persistance, flash, SPIFFS, LittleFS",
+  "keywords": "queue, stack, messaging, mqtt, persistence, store and forward, flash, SPIFFS, LittleFS, ESP32",
   "description": "Implementation of a queue that persists messages to flash",
   "repository":
   {
@@ -16,7 +16,7 @@
       "maintainer": true
     }
   ],
-  "version": "1.0.1",
+  "version": "1.2.0",
   "frameworks": "arduino",
-  "platforms": "*"
+  "platforms": "espressif32"
 }

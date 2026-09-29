@@ -107,6 +107,7 @@ void loop (void)
   Serial.println("AFTER 2:");
   listSPIFFSContents("/");
   Serial.println("================================");
+  Serial.printf("Queued: fq1=%lu, fq2=%lu\n", (unsigned long) fq1.count(), (unsigned long) fq2.count());
   
   delay(5000);
 
@@ -138,6 +139,7 @@ void loop (void)
   Serial.println("AFTER 2:");
   listSPIFFSContents("/");
   Serial.println("================================");
+  Serial.printf("Queued: fq1=%lu, fq2=%lu\n", (unsigned long) fq1.count(), (unsigned long) fq2.count());
   Serial.println("\n\n");
 
   delay(30000);

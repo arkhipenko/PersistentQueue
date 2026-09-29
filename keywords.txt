@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For TaskManager
+# Syntax Coloring Map For PersistentQueue
 #######################################
 
 #######################################
@@ -18,12 +18,18 @@ begin	KEYWORD2
 end	KEYWORD2
 enqueue	KEYWORD2
 isQueueEmpty	KEYWORD2
+count	KEYWORD2
 dequeue	KEYWORD2
+peek	KEYWORD2
+drop	KEYWORD2
 purge	KEYWORD2
+setMaxMessages	KEYWORD2
+getMaxMessages	KEYWORD2
 getLastError	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
+#######################################
 
 PQ_DEQUEUE_DEFAULT	LITERAL1
 PQ_DEQUEUE_OLDEST	LITERAL1
@@ -40,6 +46,13 @@ PQ_ERROR_BAD_CRC	LITERAL1
 PQ_ERROR_NULL_POINTER	LITERAL1
 PQ_ERROR_SMALL_BUFFER	LITERAL1
 PQ_ERROR_OTHER	LITERAL1
+PQ_ERROR_QUEUE_FULL	LITERAL1
+PQ_DEFAULT_MN	LITERAL1
+PQ_USES_SPIFFS	LITERAL1
+PQ_USES_LITTLEFS	LITERAL1
+PQ_FS	LITERAL1
+PQ_MAX_PREFIX_SIZE	LITERAL1
+PQ_VERSION	LITERAL1
+PQ_VERSION_STRING	LITERAL1
 
 #######################################
-

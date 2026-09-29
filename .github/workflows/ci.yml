@@ -1,0 +1,69 @@
+# Continuous integration for PersistentQueue
+# - host tests (tests/host) with AddressSanitizer and UndefinedBehaviorSanitizer,
+#   against a model of the arduino-esp32 FS API, for the SPIFFS and the LittleFS build
+# - example sketches compiled for ESP32 (arduino-esp32 from the Espressif index)
+# - Arduino Lint (the library is already in the Library Manager: update checks)
+
+name: CI
+
+on:
+  push:
+    branches: [main, testing]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  host-tests:
+    name: Host tests (${{ matrix.compiler }}, ${{ matrix.std }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+        std: [gnu++11, c++17, c++20]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build and run
+        run: make -C tests/host CXX=${{ matrix.compiler }} STD=${{ matrix.std }}
+
+  examples:
+    name: Examples (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: SPIFFS
+            sketches: |
+              - examples/SPIFFS_Example
+              - examples/StoreAndForward
+            flags: ""
+          - name: LittleFS
+            sketches: |
+              - examples/LittleFS_Example
+            flags: "-DPQ_USES_LITTLEFS"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: esp32:esp32:esp32
+          platforms: |
+            - name: esp32:esp32
+              source-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          sketch-paths: ${{ matrix.sketches }}
+          cli-compile-flags: |
+            - --build-property
+            - compiler.cpp.extra_flags=${{ matrix.flags }}
+            - --warnings
+            - all
+
+  lint:
+    name: Arduino Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: arduino/arduino-lint-action@v3
+        with:
+          project-type: library
+          library-manager: update
